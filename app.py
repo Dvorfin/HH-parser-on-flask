@@ -8,7 +8,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parser_database.db'
 db = SQLAlchemy(app)
 hh_connection = HHApi()  # создаем подключение к api hh.ru
-
+# just comment to delete
 
 class Vacancies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
