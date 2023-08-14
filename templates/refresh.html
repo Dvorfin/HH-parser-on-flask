@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Обновленние данных с hh
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <h2>Обновленние данных с hh</h2>
+
+
+    <div class="alert alert-info">
+
+
+        <form method="post">
+
+            <label><b>Параметры поиска</b><textarea name="request_text"  class="form-control" placeholder="{{ default_request_text }}" cols="170"></textarea></label><br>
+
+            <label>Сохранить поиск <input type="checkbox" value="1" name="save_request"  class="btn btn-success" ></label>
+            <br><br><h4>Последний запрос: {{ last_request }}</h4>
+            <br><br><input type="submit" class="btn btn-primary btn-lg btn-block" value="Поиск">
+        </form>
+        <br>
+
+        {% if is_req %}
+            <h3><b>Найдено {{ vacancies_value }} вакансий по запросу: {{ last_request }}</b></h3>
+        {% endif %}
+    </div>
+
+
+
+</div>
+
+{% endblock %}

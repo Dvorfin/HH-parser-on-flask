@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+
+{% block body %}
+<div class="container">
+    <h2>Свежие вакансии</h2>
+
+    {% for item in vacancies %}
+        <div class="alert alert-info">
+            <h3><b>{{ item.name }}</b></h3>
+			<p>Требования:</p>
+            <ul>
+                {% set requirement_list = item.requirement.split('. ') %}
+                {% for el in requirement_list %}
+                    <li>{{ el }}</li>
+                {% endfor %}
+            </ul>
+
+			<p>Обязанности:</p>
+            <ul>
+                {% set requirement_list = item.responsibility.split('. ') %}
+                {% for el in requirement_list %}
+                    <li>{{ el }}</li>
+                {% endfor %}
+            </ul>
+
+			<p>Опыт: {{ item.experience }}</p>
+			<p>Занятость: {{ item.employment }}</p>
+			<p>Опубликована: {{ item.published_at }}</p>
+			<a href="{{ item.vacancy_url }}" target="_blank" class="btn btn-warning">Детальнее</a>
+
+        </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}

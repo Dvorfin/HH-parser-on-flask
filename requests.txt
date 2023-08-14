@@ -1,0 +1,6 @@
+DESCRIPTION:python AND (IT OR python OR разработчик OR python стажер OR стажировка IT OR intern python OR junior python OR стажировка) AND NOT (1C OR HR OR менеджер OR PHP OR Java OR JavaScript OR маркетинг OR UX OR SMM OR дизайн OR закупки)
+python
+DESCRIPTION:python AND (IT OR python OR разработчик OR python стажер OR стажировка IT OR intern python OR junior python OR стажировка) AND NOT (1C OR HR OR менеджер OR PHP OR Java OR JavaScript OR маркетинг OR UX OR SMM OR дизайн OR закупки)
+DESCRIPTION:python AND (IT OR python OR разработчик OR python стажер OR стажировка IT OR intern python OR junior python OR стажировка) AND NOT (1C OR HR OR менеджер OR PHP OR Java OR JavaScript OR маркетинг OR UX OR SMM OR дизайн OR закупки)
+DESCRIPTION:python AND (IT OR python OR разработчик OR python стажер OR стажировка IT OR intern python OR junior python OR стажировка) AND NOT (1C OR HR OR менеджер OR PHP OR Java OR JavaScript OR маркетинг OR UX OR SMM OR дизайн OR закупки)
+DESCRIPTION:python AND (IT OR python OR разработчик OR python стажер OR стажировка IT OR intern python OR junior python OR стажировка) AND NOT (1C OR HR OR менеджер OR PHP OR Java OR JavaScript OR маркетинг OR UX OR SMM OR дизайн OR закупки)
