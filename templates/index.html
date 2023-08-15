@@ -39,3 +39,35 @@
 </div>
 
 {% endblock %}
+
+{% block bottom %}
+<div class="box">
+
+
+    <div  style="text-align: center"  >
+        {% if vacancies.has_prev %}
+            <a class="btn btn-warning" href="/page/{{ vacancies.prev_num }}">&laquo;</a>
+        {% endif %}
+            {% for page in vacancies.iter_pages() %}
+                {% if page == vacancies.page %}
+                    <a class="btn btn-info" href="/page/{{ page }}" >{{ page }}</a>
+                {% elif page is none %}
+                    <a class="btn btn-warning" >&hellip;</a>
+                {% else %}
+                    <a class="btn btn-warning" href="/page/{{ page }}" >{{ page }}</a>
+                {% endif %}
+        {% endfor %}
+
+        <!--
+      <a class="btn btn-warning" href="/page/1" >1</a>
+      <a class="btn btn-warning" href="/page/2" >2</a>
+      <a class="btn btn-warning" href="/page/3" >3</a>
+      <a class="btn btn-warning" href="/page/4" >4</a>
+      <a class="btn btn-warning" href="/page/5" >5</a>
+      -->
+        {% if vacancies.has_next %}
+            <a class="btn btn-warning" href="/page/{{ vacancies.next_num }}" >&raquo;</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

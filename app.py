@@ -10,6 +10,7 @@ db = SQLAlchemy(app)
 hh_connection = HHApi()  # создаем подключение к api hh.ru
 # just comment to delete
 
+
 class Vacancies(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=True)
@@ -27,10 +28,18 @@ class Vacancies(db.Model):
         return '<Vacancies %r>' % self.id
 
 
-@app.route('/')
-def index():
-    vacancies = Vacancies.query.order_by(Vacancies.published_at.desc()).all()
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/page', methods=['GET', 'POST'])
+@app.route('/page/<int:page>', methods=['GET', 'POST'])
+def index(page=1):
+    # vacancies = Vacancies.query.order_by(Vacancies.published_at.desc()).limit(10).offset(page * 10)
+    vacancies = Vacancies.query.order_by(Vacancies.published_at.desc()).paginate(page=page, per_page=10)
+    print(vacancies.prev())
+    print(vacancies.page)
+    print(list(vacancies.iter_pages()))
     return render_template('index.html', vacancies=vacancies)
+
+
 
 
 @app.route('/refresh', methods=['POST', 'GET'])
