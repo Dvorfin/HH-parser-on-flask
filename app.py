@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import select
 from hh_api import HHApi
 from functions import write_requests_into_txt, get_last_request
 
@@ -9,7 +8,6 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///parser_database.db'
 db = SQLAlchemy(app)
 hh_connection = HHApi()  # создаем подключение к api hh.ru
-# just comment to delete
 
 
 class Vacancies(db.Model):
