@@ -2,6 +2,7 @@ import time
 from datetime import datetime
 import requests
 import json
+from math import ceil
 
 # professional_roles
 #   27 - другое
@@ -43,10 +44,11 @@ class HHApi:
                      'NOT (1C OR HR OR менеджер OR PHP OR Java OR JavaScript OR маркетинг OR UX OR SMM' \
                      ' OR дизайн OR закупки)'
         self._page = 0
+        self._per_page = '20'
         self._search_params = {
             'text': self._text,
             'page': self._page,
-            'per_page': '20',
+            'per_page': self._per_page,
             'area': ['1', '232'],  # Москва, Центральный округ
             'experience': 'noExperience',  # опыт
             'employment': ['probation', 'full', 'part'],  # тип занятости
@@ -55,7 +57,8 @@ class HHApi:
         }
         self._response = None
         self._request_flag = True
-        self._value_found_vacancies = 0
+        self._value_found_vacancies = 0 # общее кол-во найденных ваканский
+
 
     def get_text(self):
         return self._text
@@ -66,6 +69,11 @@ class HHApi:
 
     def get_value_found_vacancies(self):
         return self._value_found_vacancies
+
+    def get_total_pages(self):
+        print(self._value_found_vacancies, int(self._per_page))
+
+        return ceil(self._value_found_vacancies / int(self._per_page))
 
     def make_request(self):
         try:

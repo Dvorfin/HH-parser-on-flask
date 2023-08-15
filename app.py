@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import select
 from hh_api import HHApi
 from functions import write_requests_into_txt, get_last_request
 
@@ -40,8 +41,6 @@ def index(page=1):
     return render_template('index.html', vacancies=vacancies)
 
 
-
-
 @app.route('/refresh', methods=['POST', 'GET'])
 def refresh():
     last_request = get_last_request()
@@ -57,28 +56,44 @@ def refresh():
         hh_connection.make_request()  # отправялем реквест
         data = hh_connection.get_data()  # получаем данные
 
-        for item in data['items']:
-            data_to_load = HHApi.filter_data_from_hh(item)
-            tmp = ['name', 'salary', 'vac_type', 'published_at', 'employer',
-                   'requirement', 'responsibility', 'vacancy_url', 'experience', 'employment']
-            data_to_load = {k: v for k, v in zip(tmp, data_to_load)}
-
-            vacancies = Vacancies(**data_to_load)
-
-            try:  # пробуем добавить инфу в бд
-                db.session.add(vacancies)
-                db.session.commit()
-            except Exception as e:
-                return f"При добавлении статьи произошла ошибка: {e}"
-
         vacancies_value = hh_connection.get_value_found_vacancies()
+        is_req = False
 
-        save_request = request.form.get('save_request')
-        if save_request == '1':
-            write_requests_into_txt(request_text)
+        # проходимся по всем страницам реквеста к хх
+        for page in range(0, hh_connection.get_total_pages() + 1):
 
-        last_request = request_text     # текст последнего запроса
-        is_req = True
+            for item in data['items']:
+                data_to_load = HHApi.filter_data_from_hh(item)
+
+                # проверяем наличие данной вакансии в БД
+
+                exists = Vacancies.query.filter_by(vacancy_url=data_to_load[-3]).first() is not None
+                if exists:
+                    continue
+
+                tmp = ['name', 'salary', 'vac_type', 'published_at', 'employer',
+                       'requirement', 'responsibility', 'vacancy_url', 'experience', 'employment']
+                data_to_load = {k: v for k, v in zip(tmp, data_to_load)}
+
+                vacancies = Vacancies(**data_to_load)
+
+                try:  # пробуем добавить инфу в бд
+                    db.session.add(vacancies)
+                    db.session.commit()
+                except Exception as e:
+                    return f"При добавлении статьи произошла ошибка: {e}"
+
+            save_request = request.form.get('save_request')
+            if save_request == '1':
+                write_requests_into_txt(request_text)
+
+            last_request = request_text     # текст последнего запроса
+            is_req = True
+
+            hh_connection.set_page(page)    # увеличваем номер страницы
+            hh_connection.make_request()  # отправялем реквест
+            data = hh_connection.get_data()  # получаем данные
+
         return render_template('refresh.html', last_request=last_request, is_req=is_req,
                                vacancies_value=vacancies_value, default_request_text=default_request_text)
 
