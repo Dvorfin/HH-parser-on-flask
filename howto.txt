@@ -1,0 +1,4 @@
+1) создать докер файл в директории с HH-parse-on-flask
+2) создать образ - docker build . -t <image_name>
+3) запустить контейнеер - docker run -p 5000:5000 -v  /home/toor/web-project/HH-parser-on-flask/instance/:home/user/HH-parser-on-flask/instance <image_name>
+4) перейти по 127.0.0.1:5000 в браузере и проверить 
