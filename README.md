@@ -9,6 +9,37 @@
 + Flask
 + SQLAlchemy
 + requests
++ docker
+
+
+Установить докер:
+```sh
+sudo apt install docker
+```
+
+Скопировать репозиторий:
+```sh
+git clone https://github.com/Dvorfin/HH-parser-on-flask
+```
+
+Создать образ:
+```sh
+docker build . -t <image_name>
+```
+
+Создать образ:
+```sh
+docker build . -t <image_name>
+```
+
+Запустить контейнер:
+```sh
+docker run -p 5000:5000 -v <абсолютный путь к БД на хосте>:home/user/HH-pareser-on-flask/instance <image_name>
+```
+
+Для проверки работы приложения - перейти по 127.0.0.1:5000 в браузере.
+
+
 
 Изображения приложения:
 
